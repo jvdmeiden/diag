@@ -27,6 +27,7 @@ function submitChoice(inp){
   var svgObject=document.getElementById("svg");
   var x = 0;
   var y = 0;
+  var diagBox = document.getElementById("angle");
   while (svgObject.firstChild) {
     svgObject.removeChild(svgObject.firstChild);
   }
@@ -38,7 +39,11 @@ function submitChoice(inp){
         newLine.setAttribute("x1",x);
         newLine.setAttribute("y1",y);
         newLine.setAttribute("x2",x+blockSize);
-        newLine.setAttribute("y2",y+blockSize);
+        if (diagBox.checked == true) {
+	  newLine.setAttribute("y2",y+blockSize);
+	} else {
+	  newLine.setAttribute("y2",y);
+	} 
         newLine.setAttribute("stroke-width",lineWidth);
         newLine.setAttribute("stroke","black");
         newLine.setAttribute("stroke-linecap","round");
@@ -47,7 +52,11 @@ function submitChoice(inp){
         newLine = document.createElementNS("http://www.w3.org/2000/svg", 'line');
         newLine.setAttribute("x1",x);
         newLine.setAttribute("y1",y+blockSize);
-        newLine.setAttribute("x2",x+blockSize);
+        if (diagBox.checked == true) {
+          newLine.setAttribute("x2",x+blockSize);
+	} else {
+	  newLine.setAttribute("x2",x);
+	} 
         newLine.setAttribute("y2",y);
         newLine.setAttribute("stroke-width",lineWidth);
         newLine.setAttribute("stroke","black");
@@ -55,6 +64,7 @@ function submitChoice(inp){
         svgObject.appendChild(newLine);
       } 
       y += blockSize;
+	    console.log(angle);
     }
     x += blockSize;
   }
