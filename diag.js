@@ -16,6 +16,16 @@ function init(){
   submitChoice();
 }
 
+function drawLine(object,x1,y1,x2,y2,w){
+  newLine = document.createElementNS("http://www.w3.org/2000/svg", 'line'); 
+  newLine.setAttribute("x1",x1); newLine.setAttribute("y1",y1); 
+  newLine.setAttribute("x2",x2); newLine.setAttribute("y2",y2); 
+  newLine.setAttribute("stroke-width",w); 
+  newLine.setAttribute("stroke","black"); 
+  newLine.setAttribute("stroke-linecap","round");
+  object.appendChild(newLine);
+}
+
 function submitChoice(inp){
   var blockSize=parseInt(document.forms["choice"]["blockSize"].value);
   var lineWidth=parseFloat(document.forms["choice"]["lineWidth"].value);
@@ -36,25 +46,9 @@ function submitChoice(inp){
       y = 0;
       while (y <= maxY){
         if (Math.random() < 0.5){
-          newLine = document.createElementNS("http://www.w3.org/2000/svg", 'line');
-          newLine.setAttribute("x1",x);
-          newLine.setAttribute("y1",y);
-          newLine.setAttribute("x2",x+blockSize);
-	  newLine.setAttribute("y2",y+blockSize);
-          newLine.setAttribute("stroke-width",lineWidth);
-          newLine.setAttribute("stroke","black");
-          newLine.setAttribute("stroke-linecap","round");
-          svgObject.appendChild(newLine);
+          drawLine(svgObject, x, y, x+blockSize, y+blockSize, lineWidth);
         } else {
-          newLine = document.createElementNS("http://www.w3.org/2000/svg", 'line');
-          newLine.setAttribute("x1",x);
-          newLine.setAttribute("y1",y+blockSize);
-          newLine.setAttribute("x2",x+blockSize);
-          newLine.setAttribute("y2",y);
-          newLine.setAttribute("stroke-width",lineWidth);
-          newLine.setAttribute("stroke","black");
-          newLine.setAttribute("stroke-linecap","round");
-          svgObject.appendChild(newLine);
+          drawLine(svgObject, x, y+blockSize, x+blockSize, y, lineWidth);
         } 
         y += blockSize;
       }
@@ -62,7 +56,6 @@ function submitChoice(inp){
     }
   } else {
     inc = Math.sqrt(2)*blockSize/2;
-    console.log(inc);
     n = 0;
     m = 0;
     x = -inc;
@@ -70,29 +63,11 @@ function submitChoice(inp){
       n = 0;
       y = -inc;
       while (y <= maxY + inc){
-        console.log("fdsfdsdfsdfs  ");
-        console.log(n + "  " + m);
         if ( (n + m) % 2 == 0){
           if (Math.random() < 0.5){
-            newLine = document.createElementNS("http://www.w3.org/2000/svg", 'line');
-            newLine.setAttribute("x1",x-inc);
-            newLine.setAttribute("y1",y);
-            newLine.setAttribute("x2",x+inc);
-            newLine.setAttribute("y2",y);
-            newLine.setAttribute("stroke-width",lineWidth);
-            newLine.setAttribute("stroke","black");
-            newLine.setAttribute("stroke-linecap","round");
-            svgObject.appendChild(newLine);
+            drawLine(svgObject, x-inc, y, x+inc, y, lineWidth);
           } else {
-            newLine = document.createElementNS("http://www.w3.org/2000/svg", 'line');
-            newLine.setAttribute("x1",x);
-            newLine.setAttribute("y1",y-inc);
-            newLine.setAttribute("x2",x);
-            newLine.setAttribute("y2",y+inc);
-            newLine.setAttribute("stroke-width",lineWidth);
-            newLine.setAttribute("stroke","black");
-            newLine.setAttribute("stroke-linecap","round");
-            svgObject.appendChild(newLine);
+            drawLine(svgObject, x, y-inc, x, y+inc, lineWidth);
           } 
         } 
         y += inc;
